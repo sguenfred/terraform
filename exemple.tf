@@ -23,10 +23,18 @@ resource "aws_instance" "firstone" {
   ami           = "ami-fa82739a"
   instance_type = "t2.micro"
   depends_on = [aws_s3_bucket.firstone]
+
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.firstone.public_ip} >> ip_address.txt"
+  }
 }
 
 #add another instance not relataed to s3 bucket
 resource "aws_instance" "secondone" {
   ami           = "ami-fa82739a"
   instance_type = "t2.micro"
+
+  provisioner "local-exec" {
+    command = "echo ${aws_instance.secondone.public_ip} >> ip_address.txt"
+  }
 }
