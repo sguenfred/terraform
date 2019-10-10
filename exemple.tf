@@ -1,6 +1,6 @@
 provider "aws" {
   profile    = "default"
-  region     = "us-west-2"
+  region     = var.region
 }
 
 #test the usage of a bucket
@@ -20,7 +20,7 @@ resource "aws_eip" "ip" {
 
 #the ec2 instance itself that depend to s3 bucket
 resource "aws_instance" "firstone" {
-  ami           = "ami-fa82739a"
+  ami           = var.amis[var.region]
   instance_type = "t2.micro"
   depends_on = [aws_s3_bucket.firstone]
 
@@ -31,7 +31,7 @@ resource "aws_instance" "firstone" {
 
 #add another instance not relataed to s3 bucket
 resource "aws_instance" "secondone" {
-  ami           = "ami-fa82739a"
+  ami           = var.amis[var.region]
   instance_type = "t2.micro"
 
   provisioner "local-exec" {
