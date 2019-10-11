@@ -17,6 +17,10 @@ resource "aws_eip" "ip" {
     vpc = true
     instance = aws_instance.firstone.id
 }
+#and output it
+output "ip" {
+  value = aws_eip.ip.public_ip
+}
 
 #the ec2 instance itself that depend to s3 bucket
 resource "aws_instance" "firstone" {
